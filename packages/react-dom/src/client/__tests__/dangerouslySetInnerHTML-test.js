@@ -24,6 +24,18 @@ describe('dangerouslySetInnerHTML', () => {
     });
   });
 
+  describe('when the node has innerHTML property', () => {
+    it('renders an object with a toString method', () => {
+      const container = document.createElement('div');
+      const HelloObject = {toString: () => 'Hello'};
+      const node = ReactDOM.render(
+        <div dangerouslySetInnerHTML={{__html: HelloObject}} />,
+        container,
+      );
+      expect(node.textContent).toBe('Hello');
+    });
+  });
+
   describe('when the node does not have an innerHTML property', () => {
     let innerHTMLDescriptor;
 
